@@ -1,19 +1,24 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addQuantity, removeFromCart } from "../features/cart/cartSlice";
+import { addQuantity, clearCart, deductQuantity, removeFromCart } from "../features/cart/cartSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  
-  const handleRemoveFromCart = (product)=>{
-   dispatch( removeFromCart(product));
-  }
 
-  const handleAddQuantity = (product)=>{
+  const handleRemoveFromCart = (product) => {
+    dispatch(removeFromCart(product));
+  };
+
+  const handleAddQuantity = (product) => {
     dispatch(addQuantity(product));
+  };
+  const handleDeductQuanity = (product) => {
+    dispatch(deductQuantity(product));
+  };
+  const handleClearCart = ()=>{
+    dispatch(clearCart());
   }
-
   const cart = useSelector((state) => state.cart);
   return (
     <div className="container my-3">
@@ -58,14 +63,30 @@ const Cart = () => {
                   <div className="d-flex flex-column mx-2">
                     <h5>{product.name}</h5>
                     <p>{product.decs}</p>
-                    <button className="btn btn-danger" onClick={()=> handleRemoveFromCart(product)}>Remove</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleRemoveFromCart(product)}
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
                 <span> Rs. {product.price}</span>
                 <div className="cart-quantity d-flex align-items-center border rounded">
-                  <button className="quantity-btns">-</button>
+                  <button
+                    className="quantity-btns"
+                    onClick={() => handleDeductQuanity(product)}
+                    disabled = {product.quantityInCart > 1 ? false : true}
+                  >
+                    -
+                  </button>
                   <span className="py-1 px-2">{product.quantityInCart}</span>
-                  <button className="quantity-btns" onClick={() => handleAddQuantity(product)}>+</button>
+                  <button
+                    className="quantity-btns"
+                    onClick={() => handleAddQuantity(product)}
+                  >
+                    +
+                  </button>
                 </div>
                 <span>Rs. {product.price * product.quantityInCart} </span>
               </div>
@@ -73,7 +94,7 @@ const Cart = () => {
           </div>
           <div className="cart-summary d-flex justify-content-between my-5 px-2">
             <div className="align-items-center d-flex">
-              <button className="clear-cart-btn btn">Clear Cart</button>
+              <button className="clear-cart-btn btn" onClick={()=>handleClearCart()}>Clear Cart</button>
             </div>
             <div className="cart-checkout d-flex flex-column justify-content-between">
               <div className="subtotal d-flex justify-content-between align-items-center">

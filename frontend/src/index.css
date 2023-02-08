@@ -9,9 +9,9 @@
 .cart-product-desc-container {
   height: clamp(50px, 50vh, 10rem) !important;
 }
-/* .cart-quantity{
-  
-} */
+#main-container{
+  margin-top: 100px;
+}
 .clear-cart-btn{
   border: 1px solid rgba(0, 0, 0, 0.5) !important
 } 

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const cartItemsCount = useSelector(state => state.cart.cartTotalItems);
   return (
-    <nav className="navbar bg-dark navbar-dark ">
+    <nav className="navbar bg-dark navbar-dark fixed-top">
       <div className="container-fluid px-5">
         <Link className="navbar-brand" to="/">
           <h2>ShoppingCart</h2>
